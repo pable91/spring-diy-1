@@ -20,17 +20,12 @@ public class LecturesServlet extends HttpServlet {
 
     @Override
     public void init(final ServletConfig config) throws ServletException {
-        System.out.println("init called.");
         super.init(config);
     }
 
     @Override
     protected void doGet(final HttpServletRequest request, final HttpServletResponse response) throws ServletException, IOException {
-        System.out.println("doGet called.");
-
         List<Lecture> lectures = lectureRepository.getLectures();
-
-        lectures.forEach(lecture -> System.out.println(lecture.getName() + " " + lecture.getPrice()));
 
         request.setAttribute("lectures", lectures);
         request.getRequestDispatcher("lecture-list.jsp").forward(request, response);
@@ -38,8 +33,6 @@ public class LecturesServlet extends HttpServlet {
 
     @Override
     protected void doPost(final HttpServletRequest request, final HttpServletResponse response) throws ServletException, IOException {
-        System.out.println("doPost called.");
-
         String jsonData;
         try (BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()))) {
             jsonData = br.lines().collect(Collectors.joining());
@@ -47,9 +40,6 @@ public class LecturesServlet extends HttpServlet {
 
         ObjectMapper objectMapper = new ObjectMapper();
         Lecture lecture = objectMapper.readValue(jsonData, Lecture.class);
-
-        System.out.println(lecture.getName());
-        System.out.println(lecture.getPrice());
 
         lectureRepository.save(lecture);
     }
