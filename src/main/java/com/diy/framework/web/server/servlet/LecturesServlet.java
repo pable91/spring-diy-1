@@ -18,7 +18,7 @@ public class LecturesServlet extends HttpServlet {
     @Override
     protected void doGet(final HttpServletRequest request, final HttpServletResponse response) throws ServletException, IOException {
         System.out.println("doGet called.");
-        response.getWriter().write("get lectures");
+        request.getRequestDispatcher("lecture-list.jsp").forward(request, response);
     }
 
     @Override
