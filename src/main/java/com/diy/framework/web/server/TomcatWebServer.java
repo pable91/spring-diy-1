@@ -1,5 +1,6 @@
 package com.diy.framework.web.server;
 
+import com.diy.framework.web.server.servlet.HomeServlet;
 import org.apache.catalina.Context;
 import org.apache.catalina.LifecycleException;
 import org.apache.catalina.startup.Tomcat;
@@ -15,7 +16,7 @@ import java.security.CodeSource;
 public class TomcatWebServer {
 
     private final Tomcat tomcat = new Tomcat();
-    private final int port = 8080;
+    private final int port = 8084;
 
     public void start() {
         setServerContext();
@@ -39,6 +40,10 @@ public class TomcatWebServer {
         final String absoluteResourcesPath = new File(resourcesPath).getAbsolutePath();
 
         final Context context = this.tomcat.addWebapp("/", absoluteResourcesPath);
+
+        Tomcat.addServlet(context, "homeServlet", new HomeServlet());
+
+        context.addServletMapping("/homeServlet", "homeServlet");
 
         context.setRequestCharacterEncoding("UTF-8");
         context.setResponseCharacterEncoding("UTF-8");
