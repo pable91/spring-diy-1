@@ -46,13 +46,22 @@ public class LecturesServlet extends HttpServlet {
 
     @Override
     protected void doPut(final HttpServletRequest request, final HttpServletResponse response) throws ServletException, IOException {
-        System.out.println("doPut called.");
-        response.getWriter().write("put lectures");
+        Long id = Long.parseLong(request.getParameter("id"));
+
+        String jsonData;
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()))) {
+            jsonData = br.lines().collect(Collectors.joining());
+        }
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        Lecture updated = objectMapper.readValue(jsonData, Lecture.class);
+
+        lectureRepository.update(id, updated);
     }
 
     @Override
     protected void doDelete(final HttpServletRequest request, final HttpServletResponse response) throws ServletException, IOException {
-        System.out.println("doDelete called.");
-        response.getWriter().write("delete lectures");
+        Long id = Long.parseLong(request.getParameter("id"));
+        lectureRepository.delete(id);
     }
 }
