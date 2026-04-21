@@ -1,5 +1,7 @@
 package com.diy.framework.web.server.servlet;
 
+import com.diy.app.domain.Lecture;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -28,12 +30,17 @@ public class LecturesServlet extends HttpServlet {
     protected void doPost(final HttpServletRequest request, final HttpServletResponse response) throws ServletException, IOException {
         System.out.println("doPost called.");
 
+        String jsonData;
         try (BufferedReader br = new BufferedReader(new InputStreamReader(request.getInputStream()))) {
-            String collect = br.lines().collect(Collectors.joining());
-            System.out.println(collect);
+            jsonData = br.lines().collect(Collectors.joining());
+            System.out.println(jsonData);
         }
 
-        // TODO json 변환해야함.
+        ObjectMapper objectMapper = new ObjectMapper();
+        Lecture lecture = objectMapper.readValue(jsonData, Lecture.class);
+
+        System.out.println(lecture.getName());
+        System.out.println(lecture.getPrice());
     }
 
     @Override
