@@ -1,6 +1,7 @@
 package com.diy.framework.web.view;
 
 import java.io.IOException;
+import java.util.Collection;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;

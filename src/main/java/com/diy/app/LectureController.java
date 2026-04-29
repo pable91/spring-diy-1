@@ -1,6 +1,7 @@
 package com.diy.app;
 
 import com.diy.framework.web.Controller;
+import com.diy.framework.web.model.Model;
 import com.diy.framework.web.view.JspView;
 import com.diy.framework.web.view.View;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -8,6 +9,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
@@ -36,10 +38,11 @@ public class LectureController implements Controller {
         else if ("GET".equals(request.getMethod())) {
             final Collection<Lecture> lectures = repository.values();
 
-            request.setAttribute("lectures", lectures);
+
+            final Model model = new Model();
+            model.addAttribute("lectures", lectures);
 
             final View jspView = new JspView("lecture-list.jsp");
-            jspView.render(request, response);
         }
     }
 
