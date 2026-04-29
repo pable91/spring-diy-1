@@ -38,11 +38,11 @@ public class LectureController implements Controller {
         else if ("GET".equals(request.getMethod())) {
             final Collection<Lecture> lectures = repository.values();
 
-
             final Model model = new Model();
             model.addAttribute("lectures", lectures);
 
-            final View jspView = new JspView("lecture-list.jsp");
+            final View jspView = new JspView("lecture-list.jsp", model);
+            jspView.render(request, response);
         }
     }
 
