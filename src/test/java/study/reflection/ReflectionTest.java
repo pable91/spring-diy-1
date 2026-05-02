@@ -29,4 +29,21 @@ public class ReflectionTest {
             }
         }
     }
+
+    @Test
+    @DisplayName("요구사항3 -> @PrintView 애노테이션 메소드 실행")
+    void testAnnotationMethodRun()
+        throws NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
+        Class<Car> clazz = Car.class;
+
+        Method[] declaredMethods = clazz.getDeclaredMethods();
+        for (Method declaredMethod : declaredMethods) {
+
+            if(declaredMethod.isAnnotationPresent(PrintView.class)) {
+                Car car = clazz.getDeclaredConstructor().newInstance();
+                System.out.println(declaredMethod.invoke(car));
+            }
+        }
+    }
+
 }
