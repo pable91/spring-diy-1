@@ -3,6 +3,8 @@ package study.reflection;
 import com.diy.app.Lecture;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -29,5 +31,35 @@ public class ReflectionTest2 {
         lecture.setId(100L);
 
         System.out.println(lecture.getId());
+    }
+
+    @Test
+    @DisplayName("요구사항3 -> Private 메서드 찾기")
+    void TestGetPrivateMethod() {
+        Class<Lecture> lectureClass = Lecture.class;
+
+        Method[] methods = lectureClass.getDeclaredMethods();
+        for (Method method : methods) {
+            if(method.getModifiers() == Modifier.PRIVATE){
+                System.out.println(method.getName());
+            }
+        }
+    }
+
+    @Test
+    @DisplayName("요구사항4 -> Private 메서드 호출")
+    void TestCallPrivateMethod()
+        throws NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
+
+        Class<Lecture> lectureClass = Lecture.class;
+
+        Method[] methods = lectureClass.getDeclaredMethods();
+        for (Method method : methods) {
+            if(method.getModifiers() == Modifier.PRIVATE){
+                Lecture lecture = lectureClass.getDeclaredConstructor().newInstance();
+                method.setAccessible(true);
+                method.invoke(lecture);
+            }
+        }
     }
 }

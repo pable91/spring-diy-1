@@ -26,4 +26,8 @@ public class Lecture {
     public void setId(Long id) {
         this.id = id;
     }
+
+    private void testPrivateMethod() {
+        System.out.println("testPrivateMethod");
+    }
 }
