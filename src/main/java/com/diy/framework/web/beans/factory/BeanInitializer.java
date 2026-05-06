@@ -39,4 +39,8 @@ public class BeanInitializer {
             }
         }
     }
+
+    public <T> T getBean(final Class<T> clazz) {
+        return (T) beans.get(clazz);
+    }
 }
